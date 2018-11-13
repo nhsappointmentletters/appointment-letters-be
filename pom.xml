@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>uk.co.nhs</groupId>
-	<artifactId>appointment-letters-service</artifactId>
+	<artifactId>appointment-letters-be</artifactId>
 	<version>latest</version>
 	<packaging>jar</packaging>
 
-	<name>appointment-letters-service</name>
+	<name>appointment-letters-be</name>
 	<description>NHS project to view appointment letters</description>
 
 	<parent>
@@ -24,7 +24,7 @@
 		<!--used for private repos
 					<docker.image.prefix>artifactory.dataengineering.apps.hmrci:8001</docker.image.prefix>
 					-->
-		<dockerfile.repository>saverineni/appointment-letters-service</dockerfile.repository>
+		<dockerfile.repository>saverineni/appointment-letters-be</dockerfile.repository>
 		<dockerfile.tag>latest</dockerfile.tag>
 	</properties>
 

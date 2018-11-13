@@ -2,7 +2,7 @@ version: "3"
 
 services:
   api:
-    image: saverineni/appointment-letters-service:latest
+    image: saverineni/appointment-letters-be:latest
     ports:
       - 8000:8000
     depends_on:

@@ -4,18 +4,18 @@ ENV APP_USER java
 
 RUN adduser -S $APP_USER
 
-RUN mkdir -p /usr/local/apps/appointment-letters-service
+RUN mkdir -p /usr/local/apps/appointment-letters-be
 
 # Add the service itself
 ARG JAR_FILE
-ADD ${JAR_FILE} /usr/local/apps/appointment-letters-service/app.jar
-RUN sh -c 'touch /usr/local/apps/appointment-letters-service/app.jar'
+ADD ${JAR_FILE} /usr/local/apps/appointment-letters-be/app.jar
+RUN sh -c 'touch /usr/local/apps/appointment-letters-be/app.jar'
 
 RUN mkdir -p /var/log && chown $APP_USER /var/log
 
-ADD src/test/resources/mappings.json /usr/local/apps/appointment-letters-service/
+ADD src/test/resources/mappings.json /usr/local/apps/appointment-letters-be/
 
 USER $APP_USER
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-jar", "/usr/local/apps/appointment-letters-service/app.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-jar", "/usr/local/apps/appointment-letters-be/app.jar"]
 EXPOSE 8000
 EXPOSE 3306

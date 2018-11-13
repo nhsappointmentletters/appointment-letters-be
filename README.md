@@ -25,7 +25,7 @@ This Project shows the list of Users which are stored in the MySql Database. Usi
 ###Running
 - `mvn spring-boot:run`
 
-nohup java -jar appointment-letters-service-latest.jar &
+nohup java -jar appointment-letters-be-latest.jar &
 
 #todo
 1) Html Email
