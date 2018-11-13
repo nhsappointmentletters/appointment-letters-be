@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "55e7becc-cc89-49c2-8fb3-7733364af081",
+		"name": "Nhs -appointment letters",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "token:eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXZlcmluZW5pIiwiZXhwIjoxNTQwNzU0MjMwfQ.4bz0jtKKX0UHTotXrDbzu9JjAYL0aRuR0Lf9h0OuSHPXUQx6o3KUWt8GPhW4bs4Y3KqGmi-GI9RF86thXZk5Og",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": "http://localhost:8000/user/21"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Hospital",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "token:eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXZlcmluZW5pIiwiZXhwIjoxNTQwNzU0MjMwfQ.4bz0jtKKX0UHTotXrDbzu9JjAYL0aRuR0Lf9h0OuSHPXUQx6o3KUWt8GPhW4bs4Y3KqGmi-GI9RF86thXZk5Og",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": "http://localhost:8000/hospital/22"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Hospitals By User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "token:eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXZlcmluZW5pIiwiZXhwIjoxNTQwNzU0MjMwfQ.4bz0jtKKX0UHTotXrDbzu9JjAYL0aRuR0Lf9h0OuSHPXUQx6o3KUWt8GPhW4bs4Y3KqGmi-GI9RF86thXZk5Og",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": "http://localhost:8000/user/19/hospitals"
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"username\": \"vamsikrishna\",\n        \"email\": \"suresh.averi111neni@gmail.com\",\n        \"password\": \"Vamsi123\",\n        \"firstName\": \"vamsi\",\n        \"lastName\": \"krishna\",\n        \"dateOfBirth\":\"31/12/2018\"\n    }"
+				},
+				"url": "http://localhost:8000/user"
+			},
+			"response": []
+		},
+		{
+			"name": "create appointments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8000/user/19/appointments"
+			},
+			"response": []
+		},
+		{
+			"name": "get appointments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8000/user/19/appointments"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Hospital",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t    \"hospitalId\": \"9999\",\n\t\t\"hospitalName\": \"9999hospital\"\n }"
+				},
+				"url": "http://localhost:8000/user/19/hospital"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Hospital",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"hospitalName\": \"dwfwfwffqfdqd\"\n }"
+				},
+				"url": "http://localhost:8000/user/hospital/21"
+			},
+			"response": []
+		},
+		{
+			"name": "forgot password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8000/forgotPassword?username=saverineni",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"forgotPassword"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "saverineni"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"suresh.averineni@gmail.com\",\n    \"firstName\": \" babu bhaijaan\",\n    \"lastName\": \"averineni\",\n    \"dateOfBirth\":\"31/10/2018\"\n}"
+				},
+				"url": "http://localhost:8000/user/19"
+			},
+			"response": []
+		},
+		{
+			"name": "GET TOKEN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d9a1edd4-d240-4b09-9be5-aaa222baf420",
+						"exec": [
+							"pm.test(\"status code 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"let token = pm.response.json().token;",
+							"",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"saverineni\",\n\t\"password\":\"'2!3qFsC\"\n}"
+				},
+				"url": "http://localhost:8000/authentication/generateToken"
+			},
+			"response": []
+		}
+	]
+}

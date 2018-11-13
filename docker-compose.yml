@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  api:
+    image: saverineni/appointment-letters-service:latest
+    ports:
+      - 8000:8000
+    depends_on:
+      - mysql-database
+    environment:
+      elasticsearch.host: elasticsearch
+    networks:
+      docker-network:
+      
+  mysql-database:
+    image: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+     - /tmp/mysql_data:/var/lib/mysql
+    environment:
+        MYSQL_DATABASE: "appointment_letters"
+        MYSQL_ROOT_PASSWORD: "root"
+    networks:
+      docker-network:
+
+networks:
+  docker-network:
