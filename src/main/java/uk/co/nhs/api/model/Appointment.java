@@ -9,8 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "appointment")
@@ -31,6 +31,11 @@ public class Appointment {
 
     @Column(name = "timeOfAppointment")
     private String timeOfAppointment;
+
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column
+    @JsonIgnore
+    private byte[] document;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "hospital_id",referencedColumnName ="id")

@@ -2,7 +2,10 @@ package uk.co.nhs.api.resource;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.co.nhs.api.exception.ResourceNotFoundException;
@@ -13,7 +16,11 @@ import uk.co.nhs.api.responses.AppointmentsResponse;
 import uk.co.nhs.repository.AppoinmentsRepository;
 import uk.co.nhs.repository.HospitalsRepository;
 import uk.co.nhs.repository.UsersRepository;
+import uk.co.nhs.utils.FileReader;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -42,7 +49,7 @@ public class AppointmentResource {
 
 
     @PostMapping("/user/{id}/appointments")
-    public ResponseEntity<?> createAppointments(@PathVariable("id") final Long id) {
+    public ResponseEntity<?> createAppointments(@PathVariable("id") final Long id){
        return  usersRepository.findById(id)
                 .map(user ->
                 {
@@ -64,6 +71,25 @@ public class AppointmentResource {
                 }).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
+    @GetMapping(value = "/appointment/{id}/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+   public ResponseEntity<?> downloadFile(@PathVariable("id") final Long id)  {
+
+        return  appoinmentsRepository.findById(id)
+                .map(appointment ->
+                {
+                    byte[] document = appointment.getDocument();
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setAccessControlExposeHeaders(Arrays.asList(HttpHeaders.CONTENT_DISPOSITION));
+                    String fileName = String.format("%d-appointment-%d.docx",appointment.getHospital().getId(), id);
+                    return ResponseEntity.ok()
+                            .headers(headers)
+                            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName)
+                            .contentLength(document.length)
+                            .body(new ByteArrayResource(document));
+
+                }).orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
     private void deleteAppointments(User user) {
         Set<Hospital> hospitals = new HashSet<>(user.getHospitals());
         hospitals.stream()
@@ -74,17 +100,24 @@ public class AppointmentResource {
         });
     }
 
-    private void createAppointments(User user) {
+    private void createAppointments(User user)  {
         Set<Hospital> userHospitals = new HashSet<>(user.getHospitals());
-        for(Hospital hospital : userHospitals) {
-            for(int i = 1; i<= NUMBER_OF_APPOINTMENTS; i++){
-                Appointment appointment = new Appointment();
-                appointment.setDateOfAppointment(createRandomDate());
-                appointment.setTimeOfAppointment(createRandomTime());
-                appointment.setHospital(hospital);
-                appoinmentsRepository.save(appointment);
+        try {
+            Path path = Paths.get(FileReader.class.getClassLoader().getResource("appointment-letter-1.docx").toURI());
+            for (Hospital hospital : userHospitals) {
+                for (int i = 1; i <= NUMBER_OF_APPOINTMENTS; i++) {
+                    Appointment appointment = new Appointment();
+                    appointment.setDateOfAppointment(createRandomDate());
+                    appointment.setTimeOfAppointment(createRandomTime());
+                    appointment.setHospital(hospital);
+                    appointment.setDocument(Files.readAllBytes(path));
+                    appoinmentsRepository.save(appointment);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
     }
 
