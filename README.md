@@ -25,7 +25,13 @@ This Project shows the list of Users which are stored in the MySql Database. Usi
 ###Running
 - `mvn spring-boot:run`
 
-nohup java -jar appointment-letters-be-latest.jar &
+
 
 #todo
 1) Html Email
+
+suresh.averineni@sureshs-MBP:~/Documents/ec2-details/ec2-ubuntu-aws-pem-latest (master) $ssh -i "ec2-ubuntu-sep-23.pem" ubuntu@ec2-52-15-93-251.us-east-2.compute.amazonaws.com
+
+cp -i ~/Documents/ec2-details/ec2-ubuntu-aws-pem-latest/ec2-ubuntu-sep-23.pem  target/appointment-letters-be-latest.jar ubuntu@ec2-52-15-93-251.us-east-2.compute.amazonaws.com:~/webdriver/
+
+nohup java -jar appointment-letters-service-latest.jar &

@@ -2,11 +2,14 @@ package uk.co.nhs.api.resource;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import uk.co.nhs.api.exception.ResourceNotFoundException;
 import uk.co.nhs.api.model.Appointment;
@@ -16,11 +19,7 @@ import uk.co.nhs.api.responses.AppointmentsResponse;
 import uk.co.nhs.repository.AppoinmentsRepository;
 import uk.co.nhs.repository.HospitalsRepository;
 import uk.co.nhs.repository.UsersRepository;
-import uk.co.nhs.utils.FileReader;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -35,6 +34,8 @@ public class AppointmentResource {
     private HospitalsRepository hospitalsRepository;
     @Autowired
     private AppoinmentsRepository appoinmentsRepository;
+    @Value("${documentFilePath}")
+    private String documentFilePath;
 
     @DeleteMapping("/user/{id}/appointments")
     public ResponseEntity<?> deleteAppointments(@PathVariable("id") final Long id) {
@@ -103,14 +104,16 @@ public class AppointmentResource {
     private void createAppointments(User user)  {
         Set<Hospital> userHospitals = new HashSet<>(user.getHospitals());
         try {
-            Path path = Paths.get(FileReader.class.getClassLoader().getResource("appointment-letter-1.docx").toURI());
+            log.info("document file path : "+ documentFilePath);
+            byte[] fileBytes = StreamUtils.copyToByteArray(new ClassPathResource(documentFilePath).getInputStream());
+            log.info("fileBytes : "+ fileBytes.length);
             for (Hospital hospital : userHospitals) {
                 for (int i = 1; i <= NUMBER_OF_APPOINTMENTS; i++) {
                     Appointment appointment = new Appointment();
                     appointment.setDateOfAppointment(createRandomDate());
                     appointment.setTimeOfAppointment(createRandomTime());
                     appointment.setHospital(hospital);
-                    appointment.setDocument(Files.readAllBytes(path));
+                    appointment.setDocument(fileBytes);
                     appoinmentsRepository.save(appointment);
                 }
             }
